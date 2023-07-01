@@ -26,6 +26,7 @@ Parameters:
 
 Resources:
 
+    # VPC
     VPC: 
         Type: AWS::EC2::VPC
         Properties:
@@ -34,7 +35,8 @@ Resources:
             Tags: 
                 - Key: Name 
                   Value: !Ref EnvironmentName
-            
+    
+    # IGW      
     InternetGateway:
         Type: AWS::EC2::InternetGateway
         Properties:
@@ -48,6 +50,7 @@ Resources:
             InternetGatewayId: !Ref InternetGateway
             VpcId: !Ref VPC
 
+    # Public subnet
     PublicSubnet1: 
         Type: AWS::EC2::Subnet
         Properties:
@@ -70,6 +73,7 @@ Resources:
                 - Key: Name 
                   Value: !Sub ${EnvironmentName} Public Subnet (AZ2)
 
+    # Private subnet
     PrivateSubnet1: 
         Type: AWS::EC2::Subnet
         Properties:
@@ -92,6 +96,7 @@ Resources:
                 - Key: Name 
                   Value: !Sub ${EnvironmentName} Private Subnet (AZ2)
 
+    # NAT Gateway
     NatGateway1EIP:
         Type: AWS::EC2::EIP
         DependsOn: InternetGatewayAttachment
@@ -116,6 +121,7 @@ Resources:
             AllocationId: !GetAtt NatGateway2EIP.AllocationId
             SubnetId: !Ref PublicSubnet2
 
+    # Public route table
     PublicRouteTable:
         Type: AWS::EC2::RouteTable
         Properties: 
@@ -144,7 +150,7 @@ Resources:
             RouteTableId: !Ref PublicRouteTable
             SubnetId: !Ref PublicSubnet2
     
-
+    # Private route table
     PrivateRouteTable1:
         Type: AWS::EC2::RouteTable
         Properties: 
