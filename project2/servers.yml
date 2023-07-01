@@ -1,5 +1,4 @@
-Description: This template deploys the servers and other resources for Udagram web application.
-
+Description: Server
 Parameters:
     EnvironmentName:
         Description: This name will be prefixed to all the resources.
@@ -14,32 +13,30 @@ Parameters:
 Resources:
     ## Security Groups ##
 
-    # Security Group for Load Balancer
     LBSecurityGroup:
         Type: AWS::EC2::SecurityGroup
         Properties:
             GroupDescription: Allow http to our load balancer
             VpcId:
                 Fn::ImportValue: !Sub "${EnvironmentName}-VPCID"
-            SecurityGroupIngress: #Allowing inbound traffic on port 80
+            SecurityGroupIngress: 
                 - IpProtocol: tcp
                   FromPort: 80
                   ToPort: 80
                   CidrIp: 0.0.0.0/0
-            SecurityGroupEgress: #Allowing outbound traffic on port 80
+            SecurityGroupEgress: 
                 - IpProtocol: tcp
                   FromPort: 80
                   ToPort: 80
                   CidrIp: 0.0.0.0/0
 
-    # Security group for Udagram app servers
     WebServerSecurityGroup:
         Type: AWS::EC2::SecurityGroup
         Properties:
             GroupDescription: Allow http to our hosts and SSH from local only
             VpcId:
                 Fn::ImportValue: !Sub "${EnvironmentName}-VPCID"
-            SecurityGroupIngress: #Allowing inbound traffic on port 80 for accessing application and on port 22 for SSH in case of troubleshooting any issues.
+            SecurityGroupIngress: 
                 - IpProtocol: tcp
                   FromPort: 80
                   ToPort: 80
@@ -48,7 +45,7 @@ Resources:
                   FromPort: 22
                   ToPort: 22
                   CidrIp: 0.0.0.0/0
-            SecurityGroupEgress: # Allowing outbound traffic on all ports so that updates or patches can be downloaded.
+            SecurityGroupEgress: 
                 - IpProtocol: tcp
                   FromPort: 0
                   ToPort: 65535
@@ -95,7 +92,6 @@ Resources:
 
     ## Launch Configuration ##
 
-    # Launch configuration that will be used when server will spin up.
     WebAppLaunchConfig:
         Type: AWS::AutoScaling::LaunchConfiguration
         Properties:
@@ -120,7 +116,6 @@ Resources:
 
     ## Auto Scaling Group ##
 
-    # Auto scaling group for Udagram App
     WebAppGroup:
         Type: AWS::AutoScaling::AutoScalingGroup
         Properties:
@@ -135,7 +130,6 @@ Resources:
 
     ## Load Balancer ##
 
-    # Load balancer for public subnets with load balancer security group attached
     WebAppLB:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
         Properties:
@@ -175,7 +169,6 @@ Resources:
 
     ## Target Group ##
 
-    # It checks / path for respose code 200 in every 10 seconds interval
     WebAppTargetGroup:
         Type: AWS::ElasticLoadBalancingV2::TargetGroup
         Properties:
