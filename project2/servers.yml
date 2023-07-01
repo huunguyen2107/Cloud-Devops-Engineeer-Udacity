@@ -120,7 +120,7 @@ Resources:
         Type: AWS::AutoScaling::AutoScalingGroup
         Properties:
             VPCZoneIdentifier:
-                - Fn::ImportValue: !Sub "${EnvironmentName}-PRI-NETS"
+                - Fn::ImportValue: !Sub "${EnvironmentName}-PRIV-NETS"
             LaunchConfigurationName:
                 Ref: WebAppLaunchConfig
             MinSize: "4"
@@ -134,8 +134,8 @@ Resources:
         Type: AWS::ElasticLoadBalancingV2::LoadBalancer
         Properties:
             Subnets:
-                - Fn::ImportValue: !Sub "${EnvironmentName}-PUB-SN01"
-                - Fn::ImportValue: !Sub "${EnvironmentName}-PUB-SN02"
+                - Fn::ImportValue: !Sub "${EnvironmentName}-PUB1-SN"
+                - Fn::ImportValue: !Sub "${EnvironmentName}-PUB2-SN"
             SecurityGroups:
                 - Ref: LBSecurityGroup
 
