@@ -103,7 +103,7 @@ Resources:
                     apt-get install apache2 -y
                     systemctl start apache2.service
                     cd /var/www/html
-                    aws s3 cp s3://udagram-webapp/index.html .
+                    echo "Udacity Demo Web Server Up and Running!" > index.html
             ImageId: !Ref ServerAMIId
             IamInstanceProfile: !Ref S3BucketsInstanceProfile
             SecurityGroups:

@@ -1,11 +1,11 @@
 [
     {
         "ParameterKey": "EnvironmentName",
-        "ParameterValue": "UdagramWebApp"
+        "ParameterValue": "UdacityProject"
     },
     {
         "ParameterKey": "ServerAMIId",
-        "ParameterValue": "ami-003634241a8fcdec0"
+        "ParameterValue": "ami-03f65b8614a860c29"
     },
     {
         "ParameterKey": "InstanceType",
